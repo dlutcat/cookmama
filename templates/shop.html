@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row-fluid">
+
+    <div class="span3">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">Sidebar</li>
+          {% for shop in shops %}
+          <li {% if shop_id == shop.id %} class="active" {% end %}><a href="/shop/{{shop.id}}">{{ shop.name }}</a></li>
+          {% end %}
+        </ul>
+      </div><!--/.well -->
+	  <div id="J_cart">
+		<span class="label label-success">
+			小炒肉 <span class="J_close">×</span>
+		</span>
+		<span class="label label-success">
+			小炒肉 <span class="J_close">×</span>
+		</span>
+		<span class="label label-success">
+			小炒肉 <span class="J_close">×</span>
+		</span>
+		<span class="label label-success">
+			小炒肉 <span class="J_close">×</span>
+		</span>
+		<span class="label label-success">
+			小炒肉 <span class="J_close">×</span>
+		</span>
+		<span class="label label-success">
+			小炒肉 <span class="J_close">×</span>
+		</span>
+	  </div>
+      <p style="margin-top: 25px;">
+      <button class="btn btn-large btn-primary" type="button" style="width:100%">提交</button>
+      </p>
+    </div><!--/span-->
+
+    <div class="span9">
+        <table id="J_item_table" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名字</th>
+                    <th>照片</th>
+                    <th>描述</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+				{% for item in items %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name}}</td>
+                    <td>
+                        <img src="{{ item.img }}" class="img-rounded">
+                    </td>
+                    <td>{{ item.description }}</td>
+                    <td>
+                        <label class="checkbox">
+                          <input type="checkbox" value="{{ item.id }}" data-name="{{ item.name }}"> 预定
+                        </label>
+                    </td>
+                </tr>
+				{% end %}
+            </tbody>
+        </table>
+    </div><!--/span-->
+  </div><!--/row-->
+</div>
+{% end %}
+{% block tail_js %}
+<script>
+$(function() {
+    var $table = $('#J_item_table'),
+		$cart = $('#J_cart'),
+        shop_id = $table.data('shop'),
+		items = [];
+
+    $table.on("click", "input:checkbox", function() {
+		items.push(
+		    ['<span class="label label-success" data-id="' + $(this).val() + '">',
+			    $(this).data('name'),
+			    '<span class="J_close">×</span>',
+		    '</span>'].join('')
+		);
+    });
+	$cart.append(items.join(''));
+});
+</script>
+{% end %}

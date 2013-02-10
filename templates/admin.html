@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid" style="top: 20px;">
+  <div class="row-fluid">
+
+    <div class="span3">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">Sidebar</li>
+          {% for shop in shops %}
+          <li {% if shop_id == shop.id %} class="active" {% end %}><a href="/admin/shop/{{shop.id}}">{{ shop.name }}</a></li>
+          {% end %}
+        </ul>
+      </div><!--/.well -->
+      <div id="J_tip" class="alert alert-success" style="display: none;">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <p>操作成功！</p>
+      </div>
+    </div><!--/span-->
+
+    <div class="span9">
+        <table id="J_item_table" class="table table-bordered table-striped" data-shop="{{ shop_id }}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名字</th>
+                    <th>照片</th>
+                    <th>描述</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>
+                        <img src="{{ item.img }}" class="img-rounded">
+                    </td>
+                    <td>{{ item.description }}</td>
+                    <td>
+                        <label class="checkbox">
+						  {% if item.id in shop_items %}
+                          <input type="checkbox" value="{{ item.id }}" checked> 
+						  {% else %}
+                          <input type="checkbox" value="{{ item.id }}">
+                          {% end %}
+					      选中
+                        </label>
+                    </td>
+                </tr>
+                {% end %}
+            </tbody>
+        </table>
+    </div><!--/span-->
+  </div><!--/row-->
+</div>
+{% end %}
+{% block tail_js %}
+<script>
+$(function() {
+    var $table = $('#J_item_table'),
+		$tip = $('#J_tip'),
+        shop_id = $table.data('shop');
+
+    $table.on("click", "input:checkbox", function() {
+        $.ajax({
+            url: '/j/shop/' + shop_id + '/item/' + $(this).val(),
+            type: 'POST'
+        }).done(function() {
+			$tip.fadeIn();
+			setTimeout(function() {
+				$tip.fadeOut();
+			}, 1000);
+        });
+    });
+});
+</script>
+{% end %}

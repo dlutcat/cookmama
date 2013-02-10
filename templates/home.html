@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid">
+  <div class="row-fluid">
+
+    <div class="span3">
+      <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+          <li class="nav-header">Sidebar</li>
+          {% for shop in shops %}
+          <li {% if shop_id == shop.id %} class="active" {% end %}><a href="/shop/{{shop.id}}">{{ shop.name }}</a></li>
+          {% end %}
+        </ul>
+      </div><!--/.well -->
+      <p>
+      <button class="btn btn-large btn-primary" type="button" style="width:100%">提交</button>
+      </p>
+    </div><!--/span-->
+
+    <div class="span9">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>名字</th>
+                    <th>照片</th>
+                    <th>描述</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>小炒肉</td>
+                    <td>
+                        <img src="http://bcs.duapp.com/xiachufangnew/recipe_pic/140/da/02/1008055.1.jpg" class="img-rounded">
+                    </td>
+                    <td>偏辣，口味较重</td>
+                    <td>
+                        <label class="checkbox">
+                          <input type="checkbox"> 预定
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>小炒肉</td>
+                    <td>
+                        <img src="http://bcs.duapp.com/xiachufangnew/recipe_pic/140/da/02/1008055.1.jpg" class="img-rounded">
+                    </td>
+                    <td>偏辣，口味较重</td>
+                    <td>
+                        <label class="checkbox">
+                          <input type="checkbox"> 预定
+                        </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>小炒肉</td>
+                    <td>
+                        <img src="http://bcs.duapp.com/xiachufangnew/recipe_pic/140/da/02/1008055.1.jpg" class="img-rounded">
+                    </td>
+                    <td>偏辣，口味较重</td>
+                    <td>
+                        <label class="checkbox">
+                          <input type="checkbox"> 预定
+                        </label>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div><!--/span-->
+  </div><!--/row-->
+</div>
+{% end %}

@@ -1,0 +1,29 @@
+shops:
+    - name: 鑫记
+      desc: 中式快餐，以成熟热情的老板娘俘获我厂诸屌丝程序员的芳心。
+      tel1: 123123
+      tel2: 123123
+      tel3: 123123
+    - name: 鑫记2
+      desc: 中式快餐，以成熟热情的老板娘俘获我厂诸屌丝程序员的芳心。
+      tel1: 123123
+      tel2: 123123
+      tel3: 123123
+    - name: 鑫记3
+      desc: 中式快餐，以成熟热情的老板娘俘获我厂诸屌丝程序员的芳心。
+      tel1: 123123
+      tel2: 123123
+      tel3: 123123
+    - name: 鑫记4
+      desc: 中式快餐，以成熟热情的老板娘俘获我厂诸屌丝程序员的芳心。
+      tel1: 123123
+      tel2: 123123
+      tel3: 123123
+
+items:
+    - name: 小炒肉
+      img: 'http://bcs.duapp.com/xiachufangnew/recipe_pic/140/da/02/1008055.1.jpg'
+      desc: '偏辣，口味较重'
+    - name: 油爆花菜
+      img: 'http://bcs.duapp.com/xiachufangnew/recipe_pic/140/b4/70/259988.1.jpg'
+      desc: '不辣，偏油'

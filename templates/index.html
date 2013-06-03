@@ -74,18 +74,18 @@
                         <td>小炒肉</td>
                         <td>￥ 12.00</td>
                     </tr>
-                    <tr data-id="1">
+                    <tr data-id="2">
                         <td>
                             <button class="btn btn-small btn-primary" type="button">+1</button>
                         </td>
-                        <td>小炒肉</td>
+                        <td>小炒肉2</td>
                         <td>￥ 12.00</td>
                     </tr>
-                    <tr data-id="1">
+                    <tr data-id="3">
                         <td>
                             <button class="btn btn-small btn-primary" type="button">+1</button>
                         </td>
-                        <td>小炒肉</td>
+                        <td>小炒肉3</td>
                         <td>￥ 12.00</td>
                     </tr>   
                 </tbody>
@@ -104,46 +104,12 @@
                     <th>菜品</th>
                     <th>数量</th>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>鑫杰</td>
-                        <td>小炒肉</td>
-                        <td>
-                            <button class="btn btn-mini J_sub" type="button">-</button>
-                            &nbsp;
-                            <span>1</span>
-                            &nbsp;
-                            <button class="btn btn-mini J_add" type="button">+</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>鑫杰</td>
-                        <td>小炒肉</td>
-                        <td>
-                            <button class="btn btn-mini J_sub" type="button">-</button>
-                            &nbsp;
-                            <span>1</span>
-                            &nbsp;
-                            <button class="btn btn-mini J_add" type="button">+</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>鑫杰</td>
-                        <td>小炒肉</td>
-                        <td>
-                            <button class="btn btn-mini J_sub" type="button">-</button>
-                            &nbsp;
-                            <span>1</span>
-                            &nbsp;
-                            <button class="btn btn-mini J_add" type="button">+</button>
-                        </td>
-                    </tr>
-                </tbody>
+                <tbody></tbody>
             </table>
             
             <div>
-                 <button class="btn btn-primary" type="button" style="width: 145px;">确定</button>
-                 <button class="btn btn-warning" type="button" style="width: 145px;">清空</button>
+                 <button id="J_submit" class="btn btn-primary" type="button" style="width: 145px;">确定</button>
+                 <button id="J_clear" class="btn btn-warning" type="button" style="width: 145px;">清空</button>
             </div>
         </div>
     </div>
@@ -176,16 +142,44 @@
         2: {
             name: '食其家',
             items: [
-                { id: 1, name: '小炒肉', price: 12.00 },
-                { id: 2, name: '狮子头', price: 14.00 },
-                { id: 3, name: '清蒸鲈鱼', price: 16.00 },
+                { id: 4, name: '小炒肉4', price: 12.00 },
+                { id: 5, name: '狮子头5', price: 14.00 },
+                { id: 6, name: '清蒸鲈鱼6', price: 16.00 },
             ]
         }
     };
 
+    var itemMap = {
+        1: { id: 1, name: '小炒肉', price: 12.00 },
+        2: { id: 2, name: '狮子头', price: 14.00 },
+        3: { id: 3, name: '清蒸鲈鱼', price: 16.00 },
+        4: { id: 4, name: '小炒肉4', price: 12.00 },
+        5: { id: 5, name: '狮子头5', price: 14.00 },
+        6: { id: 6, name: '清蒸鲈鱼6', price: 16.00 },
+    };
+    var currentShop = { id: 1, name: '鑫杰' };
     var tplTr = '<tr data-id="{id}"><td><button class="btn btn-small btn-primary" type="button">+1</button></td><td>{name}</td><td>￥{price}</td></tr>';
-    var tplBooking = '<tr><td>{shop}</td><td>{name}</td><td><button class="btn btn-mini" type="button">-</button>&nbsp;<span>1</span>&nbsp;<button class="btn btn-mini" type="button">+</button></td></tr>';
-    var bookingMap = {};
+    var tplBooking = '<tr class="J_item_{id}"><td>{shop}</td><td>{name}</td><td><button class="btn btn-mini J_sub" type="button">-</button>&nbsp;&nbsp;<span>1</span>&nbsp;&nbsp;<button class="btn btn-mini J_add" type="button">+</button></td></tr>';
+    var cart = {};
+    var addToCart = function(id) {
+        if (cart[id]) {
+console.log('1---', cart[id]);
+            cart[id]++;
+        } else {
+console.log('2---');
+            cart[id] = 1;
+        }
+
+        if (cart[id] === 1) {
+            var str = tplBooking.replace(/{shop}/, currentShop.name)
+                                .replace(/{name}/, itemMap[id]['name'])
+                                .replace(/{id}/, id);
+            $('#J_bookingList').append(str);
+        } else {
+            var $count = $('#J_bookingList').find('tr.J_item_' + id).find('span');
+            $count.text(parseInt($count.text()) + 1);
+        }
+    }
 
 
     $(function() {
@@ -206,7 +200,8 @@
 
 
         $('#J_list').on('click', 'tr', function() {
-            
+            var item_id = $(this).data('id');
+            addToCart(item_id);
         });
 
         $("#J_bookingList").on("click", "button.J_add", function(e) {
@@ -217,6 +212,11 @@
             if (num > 0) {
                 $(this).parent().find('span').text(parseInt(num)-1);
             }
+        });
+
+        $("#J_clear").on("click", function() {
+            $("#J_bookingList").find('tbody').empty();
+            cart = {};
         });
     });
 
